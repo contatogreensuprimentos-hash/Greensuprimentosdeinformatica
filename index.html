@@ -1,0 +1,864 @@
+```html
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Green Suprimentos de Informática</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Poppins & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="switchView('store')">
+                <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-200">
+                    <i class="fa-solid fa-leaf text-2xl"></i>
+                </div>
+                <div>
+                    <span class="text-xl font-bold tracking-tight text-slate-900 block leading-tight">Green Suprimentos</span>
+                    <span class="text-xs font-medium text-emerald-600 tracking-wide uppercase">Tecnologia & Sustentabilidade</span>
+                </div>
+            </div>
+
+            <!-- Navigation Links & Actions -->
+            <div class="flex items-center gap-4">
+                <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+                    <button onclick="switchView('store')" class="hover:text-emerald-600 transition">Catálogo</button>
+                    <button onclick="switchView('store'); scrollToSection('about')" class="hover:text-emerald-600 transition">Sobre Nós</button>
+                    <button onclick="switchView('store'); scrollToSection('contact')" class="hover:text-emerald-600 transition">Contato</button>
+                </nav>
+
+                <div class="h-6 w-px bg-slate-200 hidden md:block"></div>
+
+                <!-- Sales Panel Button -->
+                <button onclick="switchView('dashboard')" id="btnDashboard" class="flex items-center gap-2 px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 font-medium text-sm transition border border-slate-200 hover:border-emerald-200">
+                    <i class="fa-solid fa-chart-line text-emerald-600"></i>
+                    <span class="hidden sm:inline">Painel de Vendas</span>
+                </button>
+
+                <!-- Cart Button -->
+                <button onclick="openCartModal()" class="relative flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm transition shadow-sm shadow-emerald-200">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span class="hidden sm:inline">Carrinho</span>
+                    <span id="cartBadge" class="absolute -top-1.5 -right-1.5 bg-amber-500 text-white font-bold text-xs rounded-full h-5 w-5 flex items-center justify-center shadow-sm">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Dynamic Content Wrapper -->
+    <main class="flex-grow">
+
+        <!-- =================== STORE VIEW =================== -->
+        <div id="viewStore" class="block">
+            <!-- Hero Banner -->
+            <section class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-emerald-950 text-white py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#10b981_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
+                    <div class="space-y-6">
+                        <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold tracking-wide uppercase">
+                            <i class="fa-solid fa-shield-halved"></i> Equipamentos Certificados & Garantia
+                        </span>
+                        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight leading-tight">
+                            Soluções de Informática de <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Alta Performance</span>
+                        </h1>
+                        <p class="text-slate-300 text-lg leading-relaxed">
+                            Hardwares de ponta, periféricos profissionais e suprimentos corporativos com o melhor custo-benefício e suporte especializado para o seu negócio.
+                        </p>
+                        <div class="flex flex-wrap gap-4 pt-2">
+                            <button onclick="scrollToSection('products')" class="px-6 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold transition shadow-lg shadow-emerald-900/30 flex items-center gap-2">
+                                <i class="fa-solid fa-bag-shopping"></i> Ver Produtos
+                            </button>
+                            <button onclick="switchView('dashboard')" class="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold transition flex items-center gap-2">
+                                <i class="fa-solid fa-cash-register"></i> Área do Vendedor
+                            </button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-4">
+                            <div class="bg-slate-800/80 backdrop-blur border border-slate-700/60 p-6 rounded-2xl shadow-xl">
+                                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-microchip text-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-white mb-1">Hardware Avançado</h3>
+                                <p class="text-xs text-slate-400">Processadores, placas de vídeo e memórias de última geração.</p>
+                            </div>
+                            <div class="bg-slate-800/80 backdrop-blur border border-slate-700/60 p-6 rounded-2xl shadow-xl">
+                                <div class="w-10 h-10 rounded-lg bg-teal-500/20 text-teal-400 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-laptop text-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-white mb-1">Notebooks & PCs</h3>
+                                <p class="text-xs text-slate-400">Estações de trabalho otimizadas para alta produtividade.</p>
+                            </div>
+                        </div>
+                        <div class="space-y-4 pt-8">
+                            <div class="bg-slate-800/80 backdrop-blur border border-slate-700/60 p-6 rounded-2xl shadow-xl">
+                                <div class="w-10 h-10 rounded-lg bg-cyan-500/20 text-cyan-400 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-print text-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-white mb-1">Impressão & Suprimentos</h3>
+                                <p class="text-xs text-slate-400">Toners, tintas originais e impressoras de alta durabilidade.</p>
+                            </div>
+                            <div class="bg-slate-800/80 backdrop-blur border border-slate-700/60 p-6 rounded-2xl shadow-xl">
+                                <div class="w-10 h-10 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center mb-3">
+                                    <i class="fa-solid fa-headset text-xl"></i>
+                                </div>
+                                <h3 class="font-bold text-white mb-1">Suporte Técnico</h3>
+                                <p class="text-xs text-slate-400">Atendimento personalizado e faturamento para empresas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Search & Filter Bar -->
+            <section id="products" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                <div class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-900">Catálogo de Produtos</h2>
+                        <p class="text-sm text-slate-500">Explore nossa seleção de equipamentos e acessórios tecnológicos.</p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text" id="searchInput" oninput="filterProducts()" placeholder="Buscar produtos..." class="w-full sm:w-72 pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-emerald-500 shadow-sm transition">
+                        </div>
+                        <select id="categoryFilter" onchange="filterProducts()" class="px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-emerald-500 shadow-sm transition cursor-pointer">
+                            <option value="all">Todas as Categorias</option>
+                            <option value="Hardware">Hardware</option>
+                            <option value="Periféricos">Periféricos</option>
+                            <option value="Computadores">Computadores</option>
+                            <option value="Impressão">Impressão</option>
+                            <option value="Redes">Redes & Conectividade</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Products Grid -->
+                <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Products injected dynamically -->
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="bg-white border-y border-slate-200 py-16 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div class="space-y-6">
+                        <span class="text-xs font-bold text-emerald-600 uppercase tracking-widest bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">Quem Somos</span>
+                        <h2 class="text-3xl font-extrabold text-slate-900">Green Suprimentos de Informática</h2>
+                        <p class="text-slate-600 leading-relaxed">
+                            Fundada com o compromisso de entregar excelência em tecnologia e sustentabilidade, a <strong>Green Suprimentos de Informática</strong> atende tanto o consumidor final quanto empresas de todos os portes com equipamentos de ponta, garantia rigorosa e atendimento humanizado.
+                        </p>
+                        <div class="grid grid-cols-2 gap-4 pt-2">
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-1">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-800 text-sm">Produtos Originais</h4>
+                                    <p class="text-xs text-slate-500">Garantia direto do fabricante.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 mt-1">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-slate-800 text-sm">Faturamento PJ</h4>
+                                    <p class="text-xs text-slate-500">Condições especiais para empresas.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-slate-100 p-8 rounded-2xl border border-slate-200 space-y-4">
+                        <h3 class="text-lg font-bold text-slate-900 border-b border-slate-200 pb-3 flex items-center gap-2">
+                            <i class="fa-solid fa-building text-emerald-600"></i> Dados Cadastrais
+                        </h3>
+                        <div class="space-y-3 text-sm text-slate-600">
+                            <p class="flex justify-between"><strong class="text-slate-700">Razão Social:</strong> <span>Green Suprimentos de Informática</span></p>
+                            <p class="flex justify-between"><strong class="text-slate-700">CNPJ:</strong> <span class="font-mono bg-white px-2 py-0.5 rounded border border-slate-200 text-emerald-700 font-semibold">66.332.191/0001-05</span></p>
+                            <p class="flex justify-between"><strong class="text-slate-700">Segmento:</strong> <span>Comércio de Equipamentos e Suprimentos</span></p>
+                            <p class="flex justify-between"><strong class="text-slate-700">Atendimento:</strong> <span>Segunda a Sexta, 08h às 18h</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- =================== SALES DASHBOARD VIEW =================== -->
+        <div id="viewDashboard" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
+            <!-- Dashboard Header -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                <div>
+                    <div class="flex items-center gap-2 text-emerald-600 text-xs font-bold uppercase tracking-wider mb-1">
+                        <i class="fa-solid fa-lock"></span> Área Restrita para Vendedores
+                    </div>
+                    <h1 class="text-2xl font-bold text-slate-900">Painel de Vendas & Faturamento</h1>
+                    <p class="text-sm text-slate-500">Gerencie vendas em andamento, emita cobranças instantâneas (PIX/Boleto/Cartão) e acompanhe o desempenho.</p>
+                </div>
+                <button onclick="openNewSaleModal()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-sm transition shadow-sm shadow-emerald-200 flex items-center gap-2">
+                    <i class="fa-solid fa-plus"></i> Nova Venda / Cobrança
+                </button>
+            </div>
+
+            <!-- KPI Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total Vendido (Mês)</p>
+                        <h3 id="kpiTotalRevenue" class="text-2xl font-bold text-slate-900 mt-1">R$ 0,00</h3>
+                        <span class="text-xs text-emerald-600 font-medium mt-1 inline-flex items-center gap-1">
+                            <i class="fa-solid fa-arrow-trend-up"></i> +12% vs mês anterior
+                        </span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-wallet"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Vendas Realizadas</p>
+                        <h3 id="kpiTotalSales" class="text-2xl font-bold text-slate-900 mt-1">0</h3>
+                        <span class="text-xs text-blue-600 font-medium mt-1 inline-flex items-center gap-1">
+                            <i class="fa-solid fa-check-circle"></i> Transações concluídas
+                        </span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-receipt"></i>
+                    </div>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Cobranças Pendentes</p>
+                        <h3 id="kpiPendingBilling" class="text-2xl font-bold text-slate-900 mt-1">R$ 0,00</h3>
+                        <span class="text-xs text-amber-600 font-medium mt-1 inline-flex items-center gap-1">
+                            <i class="fa-solid fa-clock"></i> Aguardando pagamento
+                        </span>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-xl">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sales Table Section -->
+            <div class="bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden">
+                <div class="p-6 border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <h3 class="font-bold text-slate-900 text-lg">Histórico de Vendas e Cobranças</h3>
+                    <div class="flex items-center gap-3 w-full sm:w-auto">
+                        <input type="text" id="searchSalesInput" oninput="filterSales()" placeholder="Filtrar por cliente..." class="px-3.5 py-2 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-emerald-500 w-full sm:w-64">
+                    </div>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-sm">
+                        <thead>
+                            <tr class="bg-slate-50 text-slate-500 font-semibold border-b border-slate-200 text-xs uppercase tracking-wider">
+                                <th class="py-3 px-6">ID / Data</th>
+                                <th class="py-3 px-6">Cliente</th>
+                                <th class="py-3 px-6">Vendedor</th>
+                                <th class="py-3 px-6">Itens</th>
+                                <th class="py-3 px-6">Valor Total</th>
+                                <th class="py-3 px-6">Status</th>
+                                <th class="py-3 px-6 text-right">Ações / Cobrança</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salesTableBody" class="divide-y divide-slate-100 text-slate-700">
+                            <!-- Injected dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer id="contact" class="bg-slate-900 text-slate-400 pt-16 pb-12 border-t border-slate-800 mt-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+            <div class="space-y-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white">
+                        <i class="fa-solid fa-leaf text-xl"></i>
+                    </div>
+                    <span class="text-white font-bold text-lg">Green Suprimentos</span>
+                </div>
+                <p class="text-sm text-slate-400 leading-relaxed">
+                    Sua loja especializada em equipamentos de informática, tecnologia e suprimentos corporativos com excelência e confiabilidade.
+                </p>
+                <div class="text-xs text-slate-500 bg-slate-800/60 p-3 rounded-xl border border-slate-700/60">
+                    <p class="font-semibold text-slate-300">Green Suprimentos de Informática</p>
+                    <p>CNPJ: 66.332.191/0001-05</p>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Categorias</h4>
+                <ul class="space-y-2.5 text-sm">
+                    <li><button onclick="filterByCategory('Hardware')" class="hover:text-white transition">Hardware & Placas</button></li>
+                    <li><button onclick="filterByCategory('Periféricos')" class="hover:text-white transition">Periféricos Gamer & Office</button></li>
+                    <li><button onclick="filterByCategory('Computadores')" class="hover:text-white transition">Notebooks e Desktops</button></li>
+                    <li><button onclick="filterByCategory('Impressão')" class="hover:text-white transition">Impressoras e Toners</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Atendimento</h4>
+                <ul class="space-y-2.5 text-sm">
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-phone text-emerald-500"></i> (11) 3456-7890</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-envelope text-emerald-500"></i> contato@greensuprimentos.com.br</li>
+                    <li class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-emerald-500"></i> São Paulo, SP - Brasil</li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Área Interna</h4>
+                <p class="text-xs text-slate-400 mb-3">Acesso exclusivo para colaboradores e equipe de vendas.</p>
+                <button onclick="switchView('dashboard')" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg transition border border-slate-700 flex items-center gap-2">
+                    <i class="fa-solid fa-cash-register text-emerald-400"></i> Abrir Painel de Vendas
+                </button>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-800 pt-6 flex flex-col sm:flex-row justify-between items-center text-xs text-slate-500 gap-4">
+            <p>&copy; 2026 Green Suprimentos de Informática. CNPJ: 66.332.191/0001-05. Todos os direitos reservados.</p>
+            <div class="flex items-center gap-6">
+                <a href="#" class="hover:text-slate-400 transition">Política de Privacidade</a>
+                <a href="#" class="hover:text-slate-400 transition">Termos de Uso</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- =================== CART MODAL =================== -->
+    <div id="cartModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white w-full max-w-lg rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                        <i class="fa-solid fa-bag-shopping text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-lg">Seu Carrinho</h3>
+                        <p class="text-xs text-slate-500">Green Suprimentos de Informática</p>
+                    </div>
+                </div>
+                <button onclick="closeCartModal()" class="w-9 h-9 rounded-full bg-slate-200/80 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div id="cartItemsContainer" class="p-6 overflow-y-auto space-y-4 flex-grow divide-y divide-slate-100">
+                <!-- Cart items injected here -->
+            </div>
+
+            <div class="p-6 border-t border-slate-100 bg-slate-50 space-y-4">
+                <div class="flex justify-between items-center text-base font-bold text-slate-900">
+                    <span>Total do Pedido:</span>
+                    <span id="cartTotalValue" class="text-emerald-600 text-xl">R$ 0,00</span>
+                </div>
+                <button onclick="checkoutCart()" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-md shadow-emerald-200 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-lock"></i> Finalizar Pedido & Gerar Cobrança
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- =================== NEW SALE / BILLING MODAL (DASHBOARD) =================== -->
+    <div id="newSaleModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white w-full max-w-xl rounded-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]">
+            <div class="p-6 border-b border-slate-100 flex items-center justify-between bg-slate-50">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center">
+                        <i class="fa-solid fa-file-invoice-dollar text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-slate-900 text-lg">Nova Venda / Gerar Cobrança</h3>
+                        <p class="text-xs text-slate-500">Painel do Vendedor - Green Suprimentos</p>
+                    </div>
+                </div>
+                <button onclick="closeNewSaleModal()" class="w-9 h-9 rounded-full bg-slate-200/80 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <form id="newSaleForm" onsubmit="handleCreateSale(event)" class="p-6 overflow-y-auto space-y-4 flex-grow">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">Nome do Cliente / Empresa</label>
+                    <input type="text" id="saleClientName" required placeholder="Ex: Tech Solutions Ltda" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-emerald-500">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">Vendedor Responsável</label>
+                        <select id="saleVendor" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-emerald-500">
+                            <option value="Carlos Silva">Carlos Silva</option>
+                            <option value="Mariana Souza">Mariana Souza</option>
+                            <option value="Roberto Costa">Roberto Costa</option>
+                            <option value="Ana Beatriz">Ana Beatriz</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">Forma de Pagamento</label>
+                        <select id="salePaymentMethod" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-emerald-500">
+                            <option value="PIX">PIX (À Vista - 5% Desc.)</option>
+                            <option value="Boleto Bancário">Boleto Bancário (Faturado PJ)</option>
+                            <option value="Cartão de Crédito">Cartão de Crédito (Até 12x)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">Selecionar Produto Principal</label>
+                    <select id="saleProductSelect" onchange="updateSaleProductPrice()" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-emerald-500">
+                        <!-- Populated by JS -->
+                    </select>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">Quantidade</label>
+                        <input type="number" id="saleQuantity" min="1" value="1" oninput="calculateSaleTotal()" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-emerald-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-700 uppercase tracking-wide mb-1">Valor Unitário (R$)</label>
+                        <input type="number" step="0.01" id="saleUnitPrice" oninput="calculateSaleTotal()" required class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:border-emerald-500">
+                    </div>
+                </div>
+
+                <div class="bg-emerald-50 border border-emerald-200 p-4 rounded-xl flex justify-between items-center">
+                    <span class="text-sm font-bold text-emerald-900">Total da Cobrança:</span>
+                    <span id="saleCalculatedTotal" class="text-xl font-extrabold text-emerald-700">R$ 0,00</span>
+                </div>
+
+                <div class="pt-2">
+                    <button type="submit" class="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl transition shadow-md shadow-emerald-200 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Emitir Cobrança e Registrar Venda
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- =================== INVOICE / PIX BILLING MODAL =================== -->
+    <div id="invoiceModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl overflow-hidden flex flex-col p-6 text-center space-y-4">
+            <div class="w-16 h-16 rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto text-2xl shadow-inner">
+                <i class="fa-solid fa-qrcode"></i>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold text-slate-900">Cobrança Gerada com Sucesso!</h3>
+                <p class="text-xs text-slate-500 mt-1">Green Suprimentos de Informática • CNPJ: 66.332.191/0001-05</p>
+            </div>
+            
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-left space-y-2 text-sm">
+                <p class="flex justify-between"><span class="text-slate-500">Cliente:</span> <strong id="invClient" class="text-slate-800"></strong></p>
+                <p class="flex justify-between"><span class="text-slate-500">Método:</span> <strong id="invMethod" class="text-slate-800"></strong></p>
+                <p class="flex justify-between"><span class="text-slate-500">Valor Total:</span> <strong id="invTotal" class="text-emerald-600 font-bold text-base"></strong></p>
+                <p class="flex justify-between"><span class="text-slate-500">Status:</span> <span class="bg-amber-100 text-amber-700 px-2 py-0.5 rounded text-xs font-bold">Pendente</span></p>
+            </div>
+
+            <div class="bg-white p-3 border border-dashed border-slate-300 rounded-xl">
+                <p class="text-xs text-slate-400 mb-2">Código PIX Copia e Cola / Linha Digitável:</p>
+                <div class="bg-slate-100 p-2 rounded text-xs font-mono text-slate-600 truncate select-all">
+                    00020126580014br.gov.bcb.pix0136green-suprimentos-663321910001055204000053039865802BR5925GREEN SUPRIMENTOS INFORMAT6009SAO PAULO62070503***63045E2A
+                </div>
+            </div>
+
+            <div class="flex gap-3 pt-2">
+                <button onclick="copyPixCode()" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-sm transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-copy"></i> Copiar Código
+                </button>
+                <button onclick="closeInvoiceModal()" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-xl text-sm transition shadow-sm">
+                    Concluir
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300">
+        <div id="toastIcon" class="text-emerald-400"><i class="fa-solid fa-circle-check text-lg"></i></div>
+        <span id="toastMessage" class="text-sm font-medium">Ação realizada com sucesso!</span>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // --- Mock Data & State ---
+        const products = [
+            { id: 1, name: "Placa de Vídeo RTX 4070 12GB", category: "Hardware", price: 3899.00, image: "https://placehold.co/400x300/10b981/ffffff?text=RTX+4070", desc: "Desempenho máximo para jogos em 1440p e renderização 3D avançada." },
+            { id: 2, name: "Processador Intel Core i7-14700K", category: "Hardware", price: 2399.00, image: "https://placehold.co/400x300/059669/ffffff?text=Core+i7-14700K", desc: "20 núcleos e 28 threads para multitarefa extrema e alta taxa de quadros." },
+            { id: 3, name: "Notebook Gamer Predator Helios 16", category: "Computadores", price: 8799.00, image: "https://placehold.co/400x300/047857/ffffff?text=Notebook+Gamer", desc: "Tela WQXGA 165Hz, Core i7, 32GB RAM e SSD 1TB NVMe." },
+            { id: 4, name: "Teclado Mecânico RGB Switch Red", category: "Periféricos", price: 349.90, image: "https://placehold.co/400x300/065f46/ffffff?text=Teclado+Mecânico", desc: "Anti-ghosting completo, iluminação personalizável e switches táteis silenciosos." },
+            { id: 5, name: "Mouse Gamer Sem Fio 25K DPI", category: "Periféricos", price: 289.00, image: "https://placehold.co/400x300/10b981/ffffff?text=Mouse+Gamer", desc: "Sensor de alta precisão, ultraleve e bateria de longa duração." },
+            { id: 6, name: "Impressora Multifuncional Tanque de Tinta", category: "Impressão", price: 1650.00, image: "https://placehold.co/400x300/059669/ffffff?text=Impressora+Tanque", desc: "Impressão colorida de alto rendimento ideal para escritórios e home office." },
+            { id: 7, name: "Kit Memória RAM 32GB (2x16) DDR5", category: "Hardware", price: 950.00, image: "https://placehold.co/400x300/047857/ffffff?text=Memoria+DDR5", desc: "Velocidade de 5600MHz com dissipador térmico em alumínio escovado." },
+            { id: 8, name: "Roteador Wi-Fi 6 Mesh Gigabit", category: "Redes", price: 699.00, image: "https://placehold.co/400x300/065f46/ffffff?text=Roteador+Mesh", desc: "Cobertura de sinal impecável para residências grandes e escritórios." }
+        ];
+
+        let cart = [];
+        let salesList = [
+            { id: "GS-1001", date: "24/10/2026", client: "TechCorp Soluções", vendor: "Carlos Silva", items: "1x RTX 4070", total: 3899.00, status: "Pago (PIX)" },
+            { id: "GS-1002", date: "23/10/2026", client: "Escritório Contábil Alfa", vendor: "Mariana Souza", items: "2x Impressora Multifuncional", total: 3300.00, status: "Faturado (Boleto)" }
+        ];
+
+        // --- Initialization ---
+        window.onload = function() {
+            renderProducts(products);
+            populateSaleProductSelect();
+            updateCartBadge();
+            renderSalesTable();
+            updateKPIs();
+        };
+
+        // --- Navigation ---
+        function switchView(viewName) {
+            const storeView = document.getElementById('viewStore');
+            const dashboardView = document.getElementById('viewDashboard');
+            if (viewName === 'store') {
+                storeView.classList.remove('hidden');
+                dashboardView.classList.add('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (viewName === 'dashboard') {
+                storeView.classList.add('hidden');
+                dashboardView.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                renderSalesTable();
+                updateKPIs();
+            }
+        }
+
+        function scrollToSection(sectionId) {
+            switchView('store');
+            setTimeout(() => {
+                const el = document.getElementById(sectionId);
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        // --- Store Catalog & Filtering ---
+        function renderProducts(list) {
+            const grid = document.getElementById('productGrid');
+            if (list.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-12 text-center text-slate-400">Nenhum produto encontrado.</div>`;
+                return;
+            }
+            grid.innerHTML = list.map(p => `
+                <div class="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md transition overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <div class="relative overflow-hidden bg-slate-100 h-48">
+                            <img src="${p.image}" alt="${p.name}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" onerror="this.src='https://placehold.co/400x300/10b981/ffffff?text=Produto'">
+                            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur text-emerald-700 text-xs font-semibold px-2.5 py-1 rounded-lg shadow-sm">
+                                ${p.category}
+                            </span>
+                        </div>
+                        <div class="p-5 space-y-2">
+                            <h3 class="font-bold text-slate-900 group-hover:text-emerald-600 transition">${p.name}</h3>
+                            <p class="text-xs text-slate-500 line-clamp-2">${p.desc}</p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 flex items-center justify-between mt-4">
+                        <div>
+                            <span class="text-xs text-slate-400 block">Preço à vista</span>
+                            <span class="text-lg font-extrabold text-slate-900">R$ ${p.price.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                        </div>
+                        <button onclick="addToCart(${p.id})" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm rounded-xl transition shadow-sm shadow-emerald-200 flex items-center gap-2">
+                            <i class="fa-solid fa-cart-plus"></i> Comprar
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterProducts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const category = document.getElementById('categoryFilter').value;
+
+            const filtered = products.filter(p => {
+                const matchesQuery = p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query);
+                const matchesCategory = category === 'all' || p.category === category;
+                return matchesQuery && matchesCategory;
+            });
+            renderProducts(filtered);
+        }
+
+        function filterByCategory(cat) {
+            document.getElementById('categoryFilter').value = cat;
+            switchView('store');
+            filterProducts();
+            scrollToSection('products');
+        }
+
+        // --- Cart Management ---
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+            updateCartBadge();
+            showToast(`"${product.name}" adicionado ao carrinho!`);
+        }
+
+        function updateCartBadge() {
+            const badge = document.getElementById('cartBadge');
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            badge.innerText = totalItems;
+        }
+
+        function openCartModal() {
+            const container = document.getElementById('cartItemsContainer');
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="py-12 text-center text-slate-400"><i class="fa-solid fa-cart-shopping text-4xl mb-3 text-slate-300"></i><p>Seu carrinho está vazio.</p></div>`;
+                document.getElementById('cartTotalValue').innerText = 'R$ 0,00';
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="flex items-center justify-between py-3">
+                        <div class="flex items-center gap-3">
+                            <img src="${item.image}" class="w-12 h-12 rounded-xl object-cover border border-slate-200">
+                            <div>
+                                <h4 class="font-semibold text-slate-800 text-sm">${item.name}</h4>
+                                <span class="text-xs text-slate-500">R$ ${item.price.toLocaleString('pt-BR', {minimumFractionDigits: 2})} x ${item.qty}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-slate-900 text-sm">R$ ${(item.price * item.qty).toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+                            <button onclick="removeFromCart(${item.id})" class="text-slate-400 hover:text-red-500 p-1 transition"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    </div>
+                `).join('');
+
+                const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+                document.getElementById('cartTotalValue').innerText = `R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+            }
+            document.getElementById('cartModal').classList.remove('hidden');
+            document.getElementById('cartModal').classList.add('flex');
+        }
+
+        function closeCartModal() {
+            document.getElementById('cartModal').classList.remove('flex');
+            document.getElementById('cartModal').classList.add('hidden');
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartBadge();
+            openCartModal();
+        }
+
+        function checkoutCart() {
+            if (cart.length === 0) return;
+            const total = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            const itemsSummary = cart.map(i => `${i.qty}x ${i.name}`).join(', ');
+
+            // Automatically record as an online sale
+            const newSale = {
+                id: `GS-${Math.floor(1000 + Math.random() * 9000)}`,
+                date: new Date().toLocaleDateString('pt-BR'),
+                client: "Cliente Loja Virtual",
+                vendor: "Loja Online (Autônomo)",
+                items: itemsSummary,
+                total: total,
+                status: "Pago (PIX Online)"
+            };
+            salesList.unshift(newSale);
+            cart = [];
+            updateCartBadge();
+            closeCartModal();
+
+            showToast("Pedido finalizado com sucesso!");
+            openInvoiceModal(newSale.client, "PIX", newSale.total);
+        }
+
+        // --- Sales Dashboard & Invoicing ---
+        function populateSaleProductSelect() {
+            const select = document.getElementById('saleProductSelect');
+            select.innerHTML = products.map(p => `<option value="${p.id}" data-price="${p.price}">${p.name} - R$ ${p.price.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</option>`).join('');
+            updateSaleProductPrice();
+        }
+
+        function updateSaleProductPrice() {
+            const select = document.getElementById('saleProductSelect');
+            const selectedOption = select.options[select.selectedIndex];
+            const price = selectedOption.getAttribute('data-price');
+            document.getElementById('saleUnitPrice').value = price;
+            calculateSaleTotal();
+        }
+
+        function calculateSaleTotal() {
+            const qty = parseFloat(document.getElementById('saleQuantity').value) || 0;
+            const unitPrice = parseFloat(document.getElementById('saleUnitPrice').value) || 0;
+            const total = qty * unitPrice;
+            document.getElementById('saleCalculatedTotal').innerText = `R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+        }
+
+        function openNewSaleModal() {
+            document.getElementById('newSaleForm').reset();
+            updateSaleProductPrice();
+            document.getElementById('newSaleModal').classList.remove('hidden');
+            document.getElementById('newSaleModal').classList.add('flex');
+        }
+
+        function closeNewSaleModal() {
+            document.getElementById('newSaleModal').classList.remove('flex');
+            document.getElementById('newSaleModal').classList.add('hidden');
+        }
+
+        function handleCreateSale(event) {
+            event.preventDefault();
+            const client = document.getElementById('saleClientName').value;
+            const vendor = document.getElementById('saleVendor').value;
+            const method = document.getElementById('salePaymentMethod').value;
+            const qty = document.getElementById('saleQuantity').value;
+            const select = document.getElementById('saleProductSelect');
+            const productName = select.options[select.selectedIndex].text.split(' - ')[0];
+            const unitPrice = parseFloat(document.getElementById('saleUnitPrice').value);
+            const total = qty * unitPrice;
+
+            const newSale = {
+                id: `GS-${Math.floor(1000 + Math.random() * 9000)}`,
+                date: new Date().toLocaleDateString('pt-BR'),
+                client: client,
+                vendor: vendor,
+                items: `${qty}x ${productName}`,
+                total: total,
+                status: `Pendente (${method})`
+            };
+
+            salesList.unshift(newSale);
+            closeNewSaleModal();
+            renderSalesTable();
+            updateKPIs();
+            showToast("Venda registrada e cobrança gerada com sucesso!");
+
+            openInvoiceModal(client, method, total);
+        }
+
+        function renderSalesTable() {
+            const tbody = document.getElementById('salesTableBody');
+            if (salesList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="py-8 text-center text-slate-400">Nenhuma venda registrada.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = salesList.map(s => `
+                <tr class="hover:bg-slate-50/80 transition">
+                    <td class="py-4 px-6 font-mono text-xs font-semibold text-slate-600">${s.id}<br><span class="text-slate-400 font-normal">${s.date}</span></td>
+                    <td class="py-4 px-6 font-medium text-slate-900">${s.client}</td>
+                    <td class="py-4 px-6 text-slate-600">${s.vendor}</td>
+                    <td class="py-4 px-6 text-slate-600 text-xs">${s.items}</td>
+                    <td class="py-4 px-6 font-bold text-slate-900">R$ ${s.total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+                    <td class="py-4 px-6">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${s.status.includes('Pago') ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                            ${s.status}
+                        </span>
+                    </td>
+                    <td class="py-4 px-6 text-right">
+                        <button onclick="openInvoiceModal('${s.client}', '${s.status}', ${s.total})" class="px-3 py-1.5 bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 font-medium rounded-lg text-xs transition border border-slate-200">
+                            <i class="fa-solid fa-qrcode mr-1"></i> Ver Cobrança
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function filterSales() {
+            const query = document.getElementById('searchSalesInput').value.toLowerCase();
+            const filtered = salesList.filter(s => s.client.toLowerCase().includes(query) || s.id.toLowerCase().includes(query) || s.vendor.toLowerCase().includes(query));
+            const tbody = document.getElementById('salesTableBody');
+            tbody.innerHTML = filtered.map(s => `
+                <tr class="hover:bg-slate-50/80 transition">
+                    <td class="py-4 px-6 font-mono text-xs font-semibold text-slate-600">${s.id}<br><span class="text-slate-400 font-normal">${s.date}</span></td>
+                    <td class="py-4 px-6 font-medium text-slate-900">${s.client}</td>
+                    <td class="py-4 px-6 text-slate-600">${s.vendor}</td>
+                    <td class="py-4 px-6 text-slate-600 text-xs">${s.items}</td>
+                    <td class="py-4 px-6 font-bold text-slate-900">R$ ${s.total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</td>
+                    <td class="py-4 px-6">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${s.status.includes('Pago') ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                            ${s.status}
+                        </span>
+                    </td>
+                    <td class="py-4 px-6 text-right">
+                        <button onclick="openInvoiceModal('${s.client}', '${s.status}', ${s.total})" class="px-3 py-1.5 bg-slate-100 hover:bg-emerald-50 text-slate-700 hover:text-emerald-700 font-medium rounded-lg text-xs transition border border-slate-200">
+                            <i class="fa-solid fa-qrcode mr-1"></i> Ver Cobrança
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function updateKPIs() {
+            const totalRevenue = salesList.filter(s => s.status.includes('Pago')).reduce((sum, s) => sum + s.total, 0);
+            const totalSalesCount = salesList.length;
+            const pendingBilling = salesList.filter(s => s.status.includes('Pendente')).reduce((sum, s) => sum + s.total, 0);
+
+            document.getElementById('kpiTotalRevenue').innerText = `R$ ${totalRevenue.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+            document.getElementById('kpiTotalSales').innerText = totalSalesCount;
+            document.getElementById('kpiPendingBilling').innerText = `R$ ${pendingBilling.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+        }
+
+        // --- Invoice Modal ---
+        function openInvoiceModal(client, method, total) {
+            document.getElementById('invClient').innerText = client;
+            document.getElementById('invMethod').innerText = method;
+            document.getElementById('invTotal').innerText = `R$ ${total.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+            document.getElementById('invoiceModal').classList.remove('hidden');
+            document.getElementById('invoiceModal').classList.add('flex');
+        }
+
+        function closeInvoiceModal() {
+            document.getElementById('invoiceModal').classList.remove('flex');
+            document.getElementById('invoiceModal').classList.add('hidden');
+        }
+
+        function copyPixCode() {
+            const code = "00020126580014br.gov.bcb.pix0136green-suprimentos-663321910001055204000053039865802BR5925GREEN SUPRIMENTOS INFORMAT6009SAO PAULO62070503***63045E2A";
+            document.execCommand('copy');
+            showToast("Código PIX copiado para a área de transferência!");
+        }
+
+        // --- Toast Notification ---
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMessage').innerText = message;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
+
+```
